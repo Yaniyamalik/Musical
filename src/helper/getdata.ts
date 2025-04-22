@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
-import { request } from "http";
+
 
 export async function getdata(request:NextRequest){
     try {
