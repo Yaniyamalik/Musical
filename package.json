@@ -1,0 +1,45 @@
+{
+  "name": "musicjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev ",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.1.2",
+    "@tabler/icons-react": "^3.31.0",
+    "@types/three": "^0.175.0",
+    "axios": "^1.8.4",
+    "bcryptjs": "^3.0.2",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "mini-svg-data-uri": "^1.4.4",
+    "mongoose": "^8.13.2",
+    "motion": "^12.7.4",
+    "next": "15.2.4",
+    "nodemailer": "^6.10.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
+    "simplex-noise": "^4.0.3",
+    "tailwind-merge": "^3.2.0",
+    "three": "^0.175.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
