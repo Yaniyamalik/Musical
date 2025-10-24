@@ -1,11 +1,9 @@
 'use client';
 
-import { cn } from "@/utils/cn"; 
-import React, { createContext, useState, useContext, useRef, useEffect } from "react";
+import { cn } from "@/utils/cn";
+import React, { useContext, useEffect, useRef, createContext, useState } from "react";
 
-const MouseEnterContext = createContext<
-  [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
->(undefined);
+const MouseEnterContext = createContext<[boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined>(undefined);
 
 export const CardContainer = ({
   children,
@@ -58,8 +56,8 @@ export const CardBody = ({ children, className }: { children: React.ReactNode; c
   </div>
 );
 
-// Polymorphic CardItem with proper typing
-type CardItemProps<T extends React.ElementType = 'div'> = {
+// Polymorphic CardItem with correct children typing and ref
+type CardItemProps<T extends React.ElementType> = {
   as?: T;
   children: React.ReactNode;
   className?: string;
@@ -69,7 +67,7 @@ type CardItemProps<T extends React.ElementType = 'div'> = {
   rotateX?: number | string;
   rotateY?: number | string;
   rotateZ?: number | string;
-} & React.ComponentPropsWithoutRef<T>;
+} & Omit<React.ComponentPropsWithoutRef<T>, 'children'>;
 
 export const CardItem = <T extends React.ElementType = 'div'>({
   as,
@@ -89,11 +87,9 @@ export const CardItem = <T extends React.ElementType = 'div'>({
 
   useEffect(() => {
     if (!ref.current) return;
-    if (isMouseEntered) {
-      ref.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
-    } else {
-      ref.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
-    }
+    ref.current.style.transform = isMouseEntered
+      ? `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`
+      : `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
   }, [isMouseEntered, translateX, translateY, translateZ, rotateX, rotateY, rotateZ]);
 
   return (
@@ -103,7 +99,6 @@ export const CardItem = <T extends React.ElementType = 'div'>({
   );
 };
 
-// Hook to use context
 export const useMouseEnter = () => {
   const context = useContext(MouseEnterContext);
   if (!context) throw new Error("useMouseEnter must be used within a CardContainer");
