@@ -57,9 +57,10 @@ export const CardBody = ({ children, className }: { children: React.ReactNode; c
 );
 
 // Polymorphic CardItem with correct children typing and ref
+// ✅ Correct polymorphic typing
 type CardItemProps<T extends React.ElementType> = {
   as?: T;
-  children: React.ReactNode;
+  children?: React.ReactNode;   // <-- make children optional here
   className?: string;
   translateX?: number | string;
   translateY?: number | string;
@@ -67,7 +68,8 @@ type CardItemProps<T extends React.ElementType> = {
   rotateX?: number | string;
   rotateY?: number | string;
   rotateZ?: number | string;
-} & Omit<React.ComponentPropsWithoutRef<T>, 'children'>;
+} & Omit<React.ComponentPropsWithoutRef<T>, never>; // ✅ remove 'children' omission
+
 
 export const CardItem = <T extends React.ElementType = "div">({
   as,
@@ -81,7 +83,7 @@ export const CardItem = <T extends React.ElementType = "div">({
   rotateZ = 0,
   ...rest
 }: CardItemProps<T>) => {
-  const Tag = (as || "div") as React.ElementType; // ✅ Fix: tell TS it’s a valid React tag
+  const Tag = (as || "div") as React.ElementType;
   const ref = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
 
@@ -94,15 +96,14 @@ export const CardItem = <T extends React.ElementType = "div">({
 
   return (
     <Tag
-      ref={ref as any} // ✅ Fix: TS does not know Tag accepts a ref
+      ref={ref as any}
       className={cn("w-fit transition duration-200 ease-linear", className)}
-      {...(rest as any)} // ✅ Fix: Avoid “not assignable to LibraryManagedAttributes”
+      {...(rest as any)}
     >
       {children}
     </Tag>
   );
 };
-
 
 export const useMouseEnter = () => {
   const context = useContext(MouseEnterContext);
