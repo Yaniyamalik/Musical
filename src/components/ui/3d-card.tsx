@@ -8,6 +8,7 @@ import React, {
   useState,
   forwardRef,      // ✅ add forwardRef here instead
 } from "react";
+import { cn } from "@/utils/cn";
 
 
 const MouseEnterContext = createContext<[boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined>(undefined);
