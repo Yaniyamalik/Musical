@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
-import { cn } from "@/utils/cn";
-import React, { useContext, useEffect, useRef, createContext, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  createContext,
+  useState,
+  forwardRef,      // ✅ add forwardRef here instead
+} from "react";
+
 
 const MouseEnterContext = createContext<[boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined>(undefined);
 
@@ -72,7 +79,7 @@ type CardItemProps<T extends React.ElementType> = {
 
 
 
-import React, { forwardRef } from "react";
+
 
 export const CardItem = forwardRef(
   <T extends React.ElementType = "div">(
