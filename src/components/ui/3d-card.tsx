@@ -69,7 +69,7 @@ type CardItemProps<T extends React.ElementType> = {
   rotateZ?: number | string;
 } & Omit<React.ComponentPropsWithoutRef<T>, 'children'>;
 
-export const CardItem = <T extends React.ElementType = 'div'>({
+export const CardItem = <T extends React.ElementType = "div">({
   as,
   children,
   className,
@@ -81,7 +81,7 @@ export const CardItem = <T extends React.ElementType = 'div'>({
   rotateZ = 0,
   ...rest
 }: CardItemProps<T>) => {
-  const Tag = as || 'div';
+  const Tag = (as || "div") as React.ElementType; // ✅ Fix: tell TS it’s a valid React tag
   const ref = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
 
@@ -93,11 +93,16 @@ export const CardItem = <T extends React.ElementType = 'div'>({
   }, [isMouseEntered, translateX, translateY, translateZ, rotateX, rotateY, rotateZ]);
 
   return (
-    <Tag ref={ref} className={cn("w-fit transition duration-200 ease-linear", className)} {...rest}>
+    <Tag
+      ref={ref as any} // ✅ Fix: TS does not know Tag accepts a ref
+      className={cn("w-fit transition duration-200 ease-linear", className)}
+      {...(rest as any)} // ✅ Fix: Avoid “not assignable to LibraryManagedAttributes”
+    >
       {children}
     </Tag>
   );
 };
+
 
 export const useMouseEnter = () => {
   const context = useContext(MouseEnterContext);
