@@ -24,6 +24,9 @@ MusicVerse is a modern web application built using **Next.js** with **TypeScript
 - **Database**:  MongoDB
 
 ## 🔧 Setup Instructions
+To run deployed Website User Credentials:
+email:snehasharma@gmail.com
+password:123
 
 1. **Clone the repository**
 
