@@ -1,29 +1,19 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export async function connect() {
-  const MONGO_URI = process.env.MONGO_URI;
-
-  if (!MONGO_URI) {
-    console.log("❌ MONGO_URI not found in environment variables.");
-    return;
-  }
-
-  if (mongoose.connection.readyState === 1) {
-    console.log("✅ MongoDB already connected.");
-    return;
-  }
-
   try {
-    await mongoose.connect(MONGO_URI, {
-      dbName: "musicverse",  
+    await mongoose.connect(process.env.MONGO_URI!);
+    const connection = mongoose.connection;
+
+    connection.on('connected', () => {
+      console.log('MongoDB connected successfully');
     });
 
-    console.log("✅ MongoDB connected successfully");
+    connection.on('error', (err) => {
+      console.error('MongoDB connection error:', err);
+      process.exit(1);
+    });
   } catch (error) {
-    console.log("❌ Something went wrong while connecting to DB");
-    console.error(error);
+    console.error('Something went wrong while connecting to MongoDB:', error);
   }
-}
-
-
 }
